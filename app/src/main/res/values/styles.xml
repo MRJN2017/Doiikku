@@ -1,0 +1,22 @@
+<resources>
+
+    <!-- Custom Text Appearance for tabs -->
+    <style name="CustomTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
+    </style>
+
+    <!-- Custom style for DatePickerSpinner -->
+    <style name="DatePickerSpinner" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/purple_200</item>
+        <item name="android:datePickerStyle">@style/DatePickerDialogStyle</item>
+    </style>
+
+    <style name="DatePickerDialogStyle" parent="ThemeOverlay.AppCompat.Dialog">
+        <item name="colorAccent">@color/date_picker_dialog_header_background</item>  <!--header background-->
+        <item name="android:windowBackground">@color/date_picker_dialog_background</item>     <!--calendar background-->
+        <item name="android:colorControlActivated">@color/date_picker_dialog_selected_day</item> <!--selected day-->
+        <item name="android:textColorPrimary">@color/white</item> <!--days of the month-->
+        <item name="android:textColorSecondary">@color/white</item>    <!--days of the week-->
+    </style>
+
+</resources>
