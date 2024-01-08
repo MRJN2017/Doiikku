@@ -3,7 +3,7 @@ Berdasarkan pengalaman sendiri , saya secara pribadi selalu menyesali pengeluara
 Sehingga saya mencoba membuat aplikasi sederhana untuk manage keuangan saya dan alhasil uang saya bisa saya control dengan baik.
 
 Tampilan Home
-![alt text](https://github.com/MRJN2017/dokumentasi/blob/main/home.png?raw=true)
+![alt text](https://github.com/MRJN2017/dokumentasi/blob/main/home1.png?raw=true)
 
 Fitur untuk lihat tanggal
 ![alt text](https://github.com/MRJN2017/dokumentasi/blob/main/tgl.png?raw=true)
