@@ -9,42 +9,35 @@ import com.example.doiikku.fragment.pemasukan.PemasukanFragment;
 import com.example.doiikku.fragment.pengeluaran.PengeluaranFragment;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
+
+    private final String[] tabTitles = new String[]{"Expenses", "Income"};
+
     public ViewPagerAdapter(FragmentManager manager) {
-        super(manager);
+        super(manager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);  // Menggunakan fragment behavior terbaru
     }
 
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        Fragment fragment = null;
-
         switch (position) {
             case 0:
-                fragment = new PengeluaranFragment();
-                break;
+                return new PengeluaranFragment();
             case 1:
-                fragment = new PemasukanFragment();
-                break;
+                return new PemasukanFragment();
+            default:
+                return null;
         }
-        return fragment;    }
+    }
 
     @Override
     public int getCount() {
-        return 1;
+        // Menentukan jumlah tab yang ditampilkan
+        return tabTitles.length;
     }
 
-    //masih belum sa tahu asal usulnya
     @Override
     public CharSequence getPageTitle(int position) {
-        String strTitle = "";
-        switch (position) {
-            case 0:
-                strTitle = "Expenses";
-                break;
-            case 1:
-                strTitle = "Income";
-                break;
-        }
-        return strTitle;
+        // Mengembalikan judul tab berdasarkan posisi
+        return tabTitles[position];
     }
 }

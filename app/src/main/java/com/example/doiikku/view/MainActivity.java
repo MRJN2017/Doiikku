@@ -27,36 +27,35 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //menampilkan appbar costum
+        // Menampilkan appbar custom
         setupActionBar();
-        //memanggil layout tablayout dan tab layout
+        // Memanggil layout TabLayout dan ViewPager
         setIdLayout();
-        //Memanggil tampilan yang akan ditampilkan
+        // Memanggil tampilan yang akan ditampilkan
         setInitLayout();
-        //memanggil fungsi untuk memffilter data berdasarkan bulan
+        // Memanggil fungsi untuk memfilter data berdasarkan bulan
         initMonthPicker();
-
     }
 
     private void setupActionBar() {
-        // mengatur latar belakang actionbar. Disini saya membuat backgroundnya menjadi gradient
+        // Mengatur latar belakang ActionBar menjadi gradient
         Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.gradientappbar, null);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setBackgroundDrawable(drawable);
 
-        //mengatur tampilan actionbar. Disini saya mengaturnya di tengah karna ada tombol back disebelah kirinya
-        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        View customView = LayoutInflater.from(this).inflate(R.layout.actionbar_custom_view, null);
-        ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(
-                ActionBar.LayoutParams.MATCH_PARENT,
-                ActionBar.LayoutParams.MATCH_PARENT
-        );
-        actionBar.setCustomView(customView, layoutParams);
-        actionBar.setDisplayShowCustomEnabled(true);
+        if (actionBar != null) { // Cek null untuk menghindari NullPointerException
+            actionBar.setBackgroundDrawable(drawable);
+            actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+            View customView = LayoutInflater.from(this).inflate(R.layout.actionbar_custom_view, null);
+            ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(
+                    ActionBar.LayoutParams.MATCH_PARENT,
+                    ActionBar.LayoutParams.MATCH_PARENT
+            );
+            actionBar.setCustomView(customView, layoutParams);
+            actionBar.setDisplayShowCustomEnabled(true);
+        }
     }
 
     private void initMonthPicker() {
@@ -65,14 +64,13 @@ public class MainActivity extends AppCompatActivity {
             DatePickerDialog.OnDateSetListener date = (view1, year, monthOfYear, dayOfMonth) -> {
                 calendar.set(Calendar.YEAR, year);
                 calendar.set(Calendar.MONTH, monthOfYear);
-                // Tindakan yang ingin Anda lakukan berdasarkan bulan yang dipilih
-                // Contoh: tampilkan pesan bulan yang dipilih
+                // Tindakan berdasarkan bulan yang dipilih
                 String selectedMonth = new SimpleDateFormat("MMMM yyyy", Locale.getDefault()).format(calendar.getTime());
                 showToast("Bulan dipilih: " + selectedMonth);
             };
 
-            // Mengatur gaya spinner dan mode agar hanya menampilkan pemilihan bulan
-            new DatePickerDialog(this, R.style.DatePickerDialogStyle, date,
+            // Mengatur tampilan DatePickerDialog hanya untuk bulan
+            new DatePickerDialog(this, date,
                     calendar.get(Calendar.YEAR),
                     calendar.get(Calendar.MONTH),
                     calendar.get(Calendar.DAY_OF_MONTH)).show();
@@ -81,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-
     }
 
     private void setIdLayout() {
@@ -91,13 +88,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void setInitLayout() {
         viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));
-        //mengatur jumlah fragment yang ada diluar layar . berfngsi ketika keluar dari aplikasi kita dapat kembali ke halaman yang sama tanpa memulai kembali dari awal
+        // Mengatur jumlah fragment yang ada di luar layar
         viewPager.setOffscreenPageLimit(1);
-        //menghubungkan tablayout dengan viewpager
+        // Menghubungkan TabLayout dengan ViewPager
         tabLayout.setupWithViewPager(viewPager);
-        //menampilkan object tab pertama
+        // Menampilkan icon pada tab pertama
         tabLayout.getTabAt(0).setIcon(tabIcons[0]);
-        //menampilkan object tab kedua
-//        tabLayout.getTabAt(1).setIcon(tabIcons[1]);
+        // Menampilkan icon pada tab kedua
+        tabLayout.getTabAt(1).setIcon(tabIcons[1]);
     }
 }

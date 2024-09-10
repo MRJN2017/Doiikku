@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Doi\'ku</string>
-    <string name="title_expenses">Tambah Dosa Baru</string>
     <string name="delete_allitem">Bertobatlah, Mulai dari 0 Kembali!</string>
+    <string name="title_expenses">Tambah Dosa Baru</string>
 
-
+    <string name="title_income">Tambah Pahala</string>
 </resources>

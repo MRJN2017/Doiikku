@@ -27,6 +27,7 @@
             android:name=".fragment.pengeluaran.add.AddPengeluaranActivity"
             android:exported="false">
         </activity>
+        <activity android:name=".fragment.pemasukan.add.AddPemasukanActivity" />
 
         <meta-data
             android:name="preloaded_fonts"
