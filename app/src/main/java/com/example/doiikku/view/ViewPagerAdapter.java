@@ -5,12 +5,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import com.example.doiikku.fragment.AlurKas.AlurKasFragment;
 import com.example.doiikku.fragment.pemasukan.PemasukanFragment;
 import com.example.doiikku.fragment.pengeluaran.PengeluaranFragment;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
 
-    private final String[] tabTitles = new String[]{"Expenses", "Income", "Balance"};
+    private final String[] tabTitles = new String[]{"Expenses", "Income", "Cash"};
 
     public ViewPagerAdapter(FragmentManager manager) {
         super(manager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);  // Menggunakan fragment behavior terbaru
@@ -25,7 +26,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
             case 1:
                 return new PemasukanFragment();
             case 2:
-                return new PemasukanFragment();
+                return new AlurKasFragment();
             default:
                 return null;
         }

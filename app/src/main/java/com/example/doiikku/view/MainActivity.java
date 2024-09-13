@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.doiikku.R;
+import com.example.doiikku.fragment.AlurKas.AlurKasViewModel;
 import com.example.doiikku.fragment.pemasukan.PemasukanViewModel;
 import com.example.doiikku.fragment.pengeluaran.PengeluaranViewModel;
 import com.google.android.material.tabs.TabLayout;
@@ -75,6 +76,9 @@ public class MainActivity extends AppCompatActivity {
 
                 PemasukanViewModel pemasukanViewModel = new ViewModelProvider(this).get(PemasukanViewModel.class);
                 pemasukanViewModel.setSelectedMonth(selectedMonth);
+
+                AlurKasViewModel alurkasViewModel = new ViewModelProvider(this).get(AlurKasViewModel.class);
+                alurkasViewModel.setSelectedMonth(selectedMonth);
             };
 
             // Mengatur tampilan DatePickerDialog hanya untuk bulan

@@ -48,4 +48,11 @@ public interface DatabaseDao {
 
     @Query("UPDATE tbl_doiku SET keterangan = :keterangan, tanggal = :tgl, jml_uang = :harga WHERE id_doi = :id_doi and tipe = 'pemasukan'")
     void updateDataPemasukan(String keterangan, String tgl, int harga, int id_doi);
+
+    @Query("SELECT \n" +
+            "    (SUM(CASE WHEN tipe = 'pemasukan' THEN jml_uang ELSE 0 END) - \n" +
+            "     SUM(CASE WHEN tipe = 'pengeluaran' THEN jml_uang ELSE 0 END)) AS total_saldo\n" +
+            "FROM tbl_doiku\n" +
+            "WHERE tanggal LIKE '%' || :currentmont || '%'")
+    LiveData<Integer> getTotalAlurKas(String currentmont);
 }
