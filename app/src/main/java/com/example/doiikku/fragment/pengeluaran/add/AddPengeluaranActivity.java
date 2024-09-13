@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +25,7 @@ import com.example.doiikku.model.ModelDatabase;
 import com.example.doiikku.view.MainActivity;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -84,8 +87,51 @@ public class AddPengeluaranActivity extends AppCompatActivity {
             }
         });
 
+        // Menambahkan TextWatcher untuk mengamati perubahan teks
+        etJmlUang.addTextChangedListener(new TextWatcher() {
+
+            private String current = "";
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                // Tidak digunakan
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (!charSequence.toString().equals(current)) {
+                    etJmlUang.removeTextChangedListener(this);
+
+                    // Menghapus simbol mata uang dan pemisah ribuan
+                    String cleanString = charSequence.toString().replaceAll("[Rp,.\\s]", "");
+
+                    if (!cleanString.equals("")) {
+                        // Parse angka dan format ulang
+                        double parsed = Double.parseDouble(cleanString);
+                        String formatted = formatRupiah(parsed);
+
+                        current = formatted;
+                        etJmlUang.setText(formatted);
+                        etJmlUang.setSelection(formatted.length()); // Memastikan kursor berada di akhir
+                    }
+
+                    etJmlUang.addTextChangedListener(this);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                // Tidak digunakan
+            }
+        });
+
         loadData();
         initAction();
+    }
+
+    private String formatRupiah(double number) {
+        NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("in", "ID"));
+        return format.format(number).replaceAll(",00", ""); // Menghilangkan ,00 di belakang
     }
 
     private void setSupportActionBar(Toolbar toolbar) {
@@ -121,17 +167,27 @@ public class AddPengeluaranActivity extends AppCompatActivity {
                     Toast.makeText(AddPengeluaranActivity.this, "Ups, form tidak boleh kosong!",
                             Toast.LENGTH_SHORT).show();
                 } else {
-                    if (mIsEdit) {
-                        addPengeluaranViewModel.updatePengeluaran(strUid, strKeterangan,
-                                strTanggal, Integer.parseInt(strJmlUang));
+                    // Menghapus format Rp dan tanda titik (pemformatan ribuan)
+                    String cleanJmlUang = strJmlUang.replaceAll("[Rp,.\\s]", "");
+
+                    // Lakukan pengecekan untuk memastikan jumlah uang tidak kosong setelah diformat
+                    if (!cleanJmlUang.isEmpty()) {
+                        int jumlahUang = Integer.parseInt(cleanJmlUang);  // Mengonversi string menjadi integer
+
+                        if (mIsEdit) {
+                            addPengeluaranViewModel.updatePengeluaran(strUid, strKeterangan, strTanggal, jumlahUang);
+                        } else {
+                            addPengeluaranViewModel.addPengeluaran(strTipe, strKeterangan, strTanggal, jumlahUang);
+                        }
+
+                        finish();
                     } else {
-                        addPengeluaranViewModel.addPengeluaran(strTipe, strKeterangan,
-                                strTanggal, Integer.parseInt(strJmlUang));
+                        Toast.makeText(AddPengeluaranActivity.this, "Jumlah uang tidak valid!", Toast.LENGTH_SHORT).show();
                     }
-                    finish();
                 }
             }
         });
+
     }
 
     private void loadData() {
