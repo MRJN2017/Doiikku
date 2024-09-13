@@ -10,7 +10,7 @@ import com.example.doiikku.fragment.pengeluaran.PengeluaranFragment;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
 
-    private final String[] tabTitles = new String[]{"Expenses", "Income"};
+    private final String[] tabTitles = new String[]{"Expenses", "Income", "Balance"};
 
     public ViewPagerAdapter(FragmentManager manager) {
         super(manager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);  // Menggunakan fragment behavior terbaru
@@ -23,6 +23,8 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return new PengeluaranFragment();
             case 1:
+                return new PemasukanFragment();
+            case 2:
                 return new PemasukanFragment();
             default:
                 return null;

@@ -20,7 +20,6 @@ import com.example.doiikku.R;
 import com.example.doiikku.fragment.pemasukan.add.AddPemasukanActivity;
 import com.example.doiikku.model.ModelDatabase;
 import com.example.doiikku.util.FunctionHelper;
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -34,8 +33,6 @@ public class PemasukanFragment extends Fragment implements PemasukanAdapter.Pema
     TextView tvTotal, tvNotFound;
     Button btnHapus;
 
-    MaterialButton btnPickMonth;
-
     FloatingActionButton fabAdd;
     RecyclerView rvListData;
 
@@ -43,26 +40,42 @@ public class PemasukanFragment extends Fragment implements PemasukanAdapter.Pema
         // Required empty public constructor
     }
 
+    //menginisialisasi tampilan pada fragment pemasukan. fragment sendiri merupakan tata letak layout
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_pemasukan, container, false);
     }
 
+    //menginisisialisasi komponen dalam sebuah fragment setelah view dibuat. Merupakan tahap setup awal
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //menginisialisasi variabel tvTotal dalam view
         tvTotal = view.findViewById(R.id.tvTotal);
+        //menginisialisasi tvNotFound
         tvNotFound = view.findViewById(R.id.tvNotFound);
+        //mengisialisasi btnHapus
         btnHapus = view.findViewById(R.id.btnHapus);
+        //menginisialisasi fabAdd
         fabAdd = view.findViewById(R.id.fabAdd);
+        //menginisialisasi rvlistData
         rvListData = view.findViewById(R.id.rvListData);
+        //mengatur visibilitas dari tvNotFounf menjadi gone atau hilang
         tvNotFound.setVisibility(View.GONE);
 
+        pemasukanViewModel = new ViewModelProvider(requireActivity()).get(PemasukanViewModel.class);
+
+        // Observasi nilai selectedMonth dari ViewModel
+        pemasukanViewModel.getSelectedMonth().observe(getViewLifecycleOwner(), this::observeData);
+
+        //menginisialisasi adapter yang akan digunakan dalam RecyclerView
         initAdapter();
-        observeData();
         initAction();
+
+
     }
+
 
     private void initAction() {
         fabAdd.setOnClickListener(new View.OnClickListener() {
@@ -79,7 +92,9 @@ public class PemasukanFragment extends Fragment implements PemasukanAdapter.Pema
                 tvTotal.setText("0");
             }
         });
+
     }
+
 
     private void initAdapter() {
         pemasukanAdapter = new PemasukanAdapter(requireContext(), modelDatabase, this);
@@ -88,24 +103,20 @@ public class PemasukanFragment extends Fragment implements PemasukanAdapter.Pema
         rvListData.setAdapter(pemasukanAdapter);
     }
 
-    private void observeData() {
+    private void observeData(String month) {
         pemasukanViewModel = new ViewModelProvider(requireActivity()).get(PemasukanViewModel.class);
-        pemasukanViewModel.getPemasukan().observe(requireActivity(), new Observer<List<ModelDatabase>>() {
-            @Override
-            public void onChanged(List<ModelDatabase> pemasukan) {
-                showEmptyState(pemasukan.isEmpty());
-                pemasukanAdapter.addData(pemasukan);
-            }
+
+        pemasukanViewModel.getPemasukan(month).observe(getViewLifecycleOwner(), pemasukan -> {
+            showEmptyState(pemasukan.isEmpty());
+            pemasukanAdapter.addData(pemasukan);
         });
 
-        pemasukanViewModel.getTotalPemasukan().observe(requireActivity(), new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer integer) {
-                int totalPrice = (integer != null) ? integer : 0;
-                String initPrice = FunctionHelper.rupiahFormat(totalPrice);
-                tvTotal.setText(initPrice);
-            }
+        pemasukanViewModel.getTotalPemasukan(month).observe(getViewLifecycleOwner(), total -> {
+            int totalPrice = (total != null) ? total : 0;
+            String formattedPrice = FunctionHelper.rupiahFormat(totalPrice);
+            tvTotal.setText(formattedPrice);
         });
+
     }
 
     @Override
@@ -116,12 +127,12 @@ public class PemasukanFragment extends Fragment implements PemasukanAdapter.Pema
     @Override
     public void onDelete(ModelDatabase modelDatabase) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(requireContext());
-        alertDialogBuilder.setMessage("Hapus pemasukan ini?");
+        alertDialogBuilder.setMessage("Hapus dosa ini?");
         alertDialogBuilder.setPositiveButton("Ya, Hapus", (dialogInterface, i) -> {
             int uid = modelDatabase.id_doi;
             String sKeterangan = pemasukanViewModel.deleteSingleData(uid);
             if (sKeterangan.equals("OK")) {
-                Toast.makeText(requireContext(), "Pemasukan yang Anda pilih sudah dihapus", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), "Dosa yang Anda pilih sudah dihapus", Toast.LENGTH_SHORT).show();
             }
         });
 

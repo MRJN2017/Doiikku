@@ -12,8 +12,8 @@ import java.util.List;
 
 @Dao
 public interface DatabaseDao {
-    @Query("SELECT * FROM tbl_doiku WHERE tipe = 'pengeluaran'")
-    LiveData<List<ModelDatabase>> getAllPengeluaran();
+    @Query("SELECT * FROM tbl_doiku WHERE tanggal LIKE '%'||:currentmont||'%' and tipe = 'pengeluaran'")
+    LiveData<List<ModelDatabase>> getAllPengeluaran(String currentmont);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertPengeluaran(ModelDatabase... pengeluaran);
@@ -24,15 +24,15 @@ public interface DatabaseDao {
     @Query("DELETE FROM tbl_doiku WHERE id_doi= :id_doi and tipe = 'pengeluaran'")
     void deleteSinglePengeluaran(int id_doi);
 
-    @Query("SELECT SUM(jml_uang) FROM tbl_doiku WHERE tipe = 'pengeluaran'")
-    LiveData<Integer> getTotalPengeluaran();
+    @Query("SELECT SUM(jml_uang) FROM tbl_doiku WHERE tipe = 'pengeluaran' and tanggal LIKE '%'||:currentmont||'%'")
+    LiveData<Integer> getTotalPengeluaran(String currentmont);
 
     @Query("UPDATE tbl_doiku SET keterangan = :keterangan, tanggal = :tgl, jml_uang = :harga WHERE id_doi = :id_doi and tipe = 'pengeluaran'")
     void updateDataPengeluaran(String keterangan, String tgl, int harga, int id_doi);
 
     //Data Pemasukan
-    @Query("SELECT * FROM tbl_doiku WHERE tipe = 'pemasukan'")
-    LiveData<List<ModelDatabase>> getAllPemasukan();
+    @Query("SELECT * FROM tbl_doiku WHERE tanggal LIKE '%'||:currentmont||'%' and tipe = 'pemasukan'")
+    LiveData<List<ModelDatabase>> getAllPemasukan(String currentmont);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertPemasukan(ModelDatabase... pemasukan);
@@ -43,8 +43,8 @@ public interface DatabaseDao {
     @Query("DELETE FROM tbl_doiku WHERE id_doi= :id_doi and tipe = 'pemasukan'")
     void deleteSinglePemasukan(int id_doi);
 
-    @Query("SELECT SUM(jml_uang) FROM tbl_doiku WHERE tipe = 'pemasukan'")
-    LiveData<Integer> getTotalPemasukan();
+    @Query("SELECT SUM(jml_uang) FROM tbl_doiku WHERE tanggal LIKE '%'||:currentmont||'%' and tipe = 'pemasukan'")
+    LiveData<Integer> getTotalPemasukan(String currentmont);
 
     @Query("UPDATE tbl_doiku SET keterangan = :keterangan, tanggal = :tgl, jml_uang = :harga WHERE id_doi = :id_doi and tipe = 'pemasukan'")
     void updateDataPemasukan(String keterangan, String tgl, int harga, int id_doi);

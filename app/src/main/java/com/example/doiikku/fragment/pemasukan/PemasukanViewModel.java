@@ -5,10 +5,12 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.doiikku.database.DatabaseClient;
 import com.example.doiikku.database.dao.DatabaseDao;
 import com.example.doiikku.model.ModelDatabase;
+import com.example.doiikku.util.FunctionHelper;
 
 import java.util.List;
 
@@ -22,19 +24,31 @@ public class PemasukanViewModel extends AndroidViewModel {
     private DatabaseDao databaseDao;
     private LiveData<Integer> mTotalPrice;
 
+    // Tambahkan MutableLiveData untuk menyimpan bulan yang dipilih
+    private MutableLiveData<String> selectedMonth = new MutableLiveData<>();
+
     public PemasukanViewModel(@NonNull Application application) {
         super(application);
         databaseDao = DatabaseClient.getInstance(application).getAppDatabase().databaseDao();
-        mPemasukans = databaseDao.getAllPemasukan();
-        mTotalPrice = databaseDao.getTotalPemasukan();
+        selectedMonth.setValue(FunctionHelper.getCurrentMonth());
     }
 
-    public LiveData<List<ModelDatabase>> getPemasukan() {
-        return mPemasukans;
+    // Metode untuk mengatur bulan yang dipilih
+    public void setSelectedMonth(String month) {
+        selectedMonth.setValue(month);
     }
 
-    public LiveData<Integer> getTotalPemasukan() {
-        return mTotalPrice;
+    // Metode untuk mendapatkan bulan yang dipilih
+    public LiveData<String> getSelectedMonth() {
+        return selectedMonth;
+    }
+
+    public LiveData<List<ModelDatabase>> getPemasukan(String currentmont) {
+        return databaseDao.getAllPemasukan(currentmont);
+    }
+
+    public LiveData<Integer> getTotalPemasukan(String currentmont) {
+        return databaseDao.getTotalPemasukan(currentmont);
     }
 
     public void deleteAllData() {

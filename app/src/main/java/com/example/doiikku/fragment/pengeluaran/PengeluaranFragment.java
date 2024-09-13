@@ -20,7 +20,6 @@ import com.example.doiikku.R;
 import com.example.doiikku.fragment.pengeluaran.add.AddPengeluaranActivity;
 import com.example.doiikku.model.ModelDatabase;
 import com.example.doiikku.util.FunctionHelper;
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -34,14 +33,13 @@ public class PengeluaranFragment extends Fragment implements PengeluaranAdapter.
     TextView tvTotal, tvNotFound;
     Button btnHapus;
 
-    MaterialButton btnPickMonth;
-
     FloatingActionButton fabAdd;
     RecyclerView rvListData;
 
     public PengeluaranFragment() {
         // Required empty public constructor
     }
+
     //menginisialisasi tampilan pada fragment pengeluaran. fragment sendiri merupakan tata letak layout
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -66,13 +64,18 @@ public class PengeluaranFragment extends Fragment implements PengeluaranAdapter.
         //mengatur visibilitas dari tvNotFounf menjadi gone atau hilang
         tvNotFound.setVisibility(View.GONE);
 
+        pengeluaranViewModel = new ViewModelProvider(requireActivity()).get(PengeluaranViewModel.class);
+
+        // Observasi nilai selectedMonth dari ViewModel
+        pengeluaranViewModel.getSelectedMonth().observe(getViewLifecycleOwner(), this::observeData);
+
         //menginisialisasi adapter yang akan digunakan dalam RecyclerView
         initAdapter();
-        //mengobserve data yang ditampilkan dalam fragment
-        observeData();
-        //menginisialisasi action atau event-handler yang diperlukan
         initAction();
+
+
     }
+
 
     private void initAction() {
         fabAdd.setOnClickListener(new View.OnClickListener() {
@@ -100,24 +103,20 @@ public class PengeluaranFragment extends Fragment implements PengeluaranAdapter.
         rvListData.setAdapter(pengeluaranAdapter);
     }
 
-    private void observeData() {
+    private void observeData(String month) {
         pengeluaranViewModel = new ViewModelProvider(requireActivity()).get(PengeluaranViewModel.class);
-        pengeluaranViewModel.getPengeluaran().observe(requireActivity(), new Observer<List<ModelDatabase>>() {
-            @Override
-            public void onChanged(List<ModelDatabase> pengeluaran) {
-                showEmptyState(pengeluaran.isEmpty());
-                pengeluaranAdapter.addData(pengeluaran);
-            }
+
+        pengeluaranViewModel.getPengeluaran(month).observe(getViewLifecycleOwner(), pengeluaran -> {
+            showEmptyState(pengeluaran.isEmpty());
+            pengeluaranAdapter.addData(pengeluaran);
         });
 
-        pengeluaranViewModel.getTotalPengeluaran().observe(requireActivity(), new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer integer) {
-                int totalPrice = (integer != null) ? integer : 0;
-                String initPrice = FunctionHelper.rupiahFormat(totalPrice);
-                tvTotal.setText(initPrice);
-            }
+        pengeluaranViewModel.getTotalPengeluaran(month).observe(getViewLifecycleOwner(), total -> {
+            int totalPrice = (total != null) ? total : 0;
+            String formattedPrice = FunctionHelper.rupiahFormat(totalPrice);
+            tvTotal.setText(formattedPrice);
         });
+
     }
 
     @Override

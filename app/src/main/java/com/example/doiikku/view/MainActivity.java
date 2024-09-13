@@ -10,9 +10,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.doiikku.R;
+import com.example.doiikku.fragment.pemasukan.PemasukanViewModel;
+import com.example.doiikku.fragment.pengeluaran.PengeluaranViewModel;
 import com.google.android.material.tabs.TabLayout;
 
 import java.text.SimpleDateFormat;
@@ -23,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     TabLayout tabLayout;
     ViewPager viewPager;
-    int[] tabIcons = {R.drawable.ic_pengeluaran, R.drawable.ic_pemasukan};
+    int[] tabIcons = {R.drawable.ic_pengeluaran, R.drawable.ic_pemasukan, R.drawable.ic_balance_24};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +69,12 @@ public class MainActivity extends AppCompatActivity {
                 calendar.set(Calendar.MONTH, monthOfYear);
                 // Tindakan berdasarkan bulan yang dipilih
                 String selectedMonth = new SimpleDateFormat("MMMM yyyy", Locale.getDefault()).format(calendar.getTime());
-                showToast("Bulan dipilih: " + selectedMonth);
+                // Kirim nilai selectedMonth ke PengeluaranViewModel
+                PengeluaranViewModel pengeluaranViewModel = new ViewModelProvider(this).get(PengeluaranViewModel.class);
+                pengeluaranViewModel.setSelectedMonth(selectedMonth);
+
+                PemasukanViewModel pemasukanViewModel = new ViewModelProvider(this).get(PemasukanViewModel.class);
+                pemasukanViewModel.setSelectedMonth(selectedMonth);
             };
 
             // Mengatur tampilan DatePickerDialog hanya untuk bulan
@@ -96,5 +104,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.getTabAt(0).setIcon(tabIcons[0]);
         // Menampilkan icon pada tab kedua
         tabLayout.getTabAt(1).setIcon(tabIcons[1]);
+        // Menampilkan icon pada tab ketiga
+        tabLayout.getTabAt(2).setIcon(tabIcons[2]);
     }
 }
