@@ -55,4 +55,10 @@ public interface DatabaseDao {
             "FROM tbl_doiku\n" +
             "WHERE tanggal LIKE '%' || :currentmont || '%'")
     LiveData<Integer> getTotalAlurKas(String currentmont);
+
+    @Query("DELETE FROM tbl_doiku WHERE tipe = 'pengeluaran' AND tanggal LIKE '%' || :selectedMonth")
+    void deleteAllPengeluaranByMonth(String selectedMonth);
+
+    @Query("DELETE FROM tbl_doiku WHERE tanggal LIKE '%'||:selectedMonth AND tipe = 'pemasukan' ")
+    void deleteAllPemasukanByMonth(String selectedMonth);
 }

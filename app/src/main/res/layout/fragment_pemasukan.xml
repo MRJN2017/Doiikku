@@ -65,22 +65,39 @@
         android:layout_height="match_parent"
         android:layout_above="@id/btnHapus"
         android:layout_below="@id/cvTotal"
-        android:layout_marginTop="50dp" />
+        android:layout_marginTop="58dp" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnHapus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="-40dp"
+        android:layout_marginStart="358dp"
+        android:layout_marginEnd="-55dp"
         android:layout_marginBottom="17dp"
         android:layout_toStartOf="@id/fabAdd"
-        android:background="@drawable/bg_button_primary"
-        android:backgroundTint="#673AB7"
-        android:text="@string/delete_allitem"
+        android:background="@drawable/ic_delete"
+        android:backgroundTint="#F5E239"
+        android:contentDescription="@string/delete_allitem"
         android:textAllCaps="false"
         android:textColor="@android:color/white" />
+
+<!--    <Button-->
+<!--        android:id="@+id/btnHapus"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_margin="8dp"-->
+<!--        android:background="?attr/selectableItemBackgroundBorderless"-->
+<!--        android:padding="8dp"-->
+<!--        android:text="Hapus"-->
+<!--        android:textColor="@android:color/holo_red_dark"-->
+<!--        android:drawableStart="@drawable/bg_button_primary"-->
+<!--        android:drawablePadding="8dp"-->
+<!--        android:textSize="12sp"-->
+<!--        android:elevation="4dp"-->
+<!--        android:layout_gravity="end"-->
+<!--        android:visibility="visible" />-->
+
 
     <TextView
         android:id="@+id/tvNotFound"

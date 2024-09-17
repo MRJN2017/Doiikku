@@ -5,17 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-
-
 import com.example.doiikku.R;
 import com.example.doiikku.util.FunctionHelper;
 
 public class AlurKasFragment extends Fragment  {
-
-
     private AlurKasViewModel alurKasViewModel;
     TextView tvTotal, tvPemasukanTotal, tvPengeluaranTotal;
 
@@ -67,7 +62,4 @@ public class AlurKasFragment extends Fragment  {
         });
 
     }
-
-
-
 }

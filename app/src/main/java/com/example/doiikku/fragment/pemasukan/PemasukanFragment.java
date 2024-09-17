@@ -51,6 +51,7 @@ public class PemasukanFragment extends Fragment implements PemasukanAdapter.Pema
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
         //menginisialisasi variabel tvTotal dalam view
         tvTotal = view.findViewById(R.id.tvTotal);
         //menginisialisasi tvNotFound
@@ -72,8 +73,6 @@ public class PemasukanFragment extends Fragment implements PemasukanAdapter.Pema
         //menginisialisasi adapter yang akan digunakan dalam RecyclerView
         initAdapter();
         initAction();
-
-
     }
 
 
@@ -88,10 +87,19 @@ public class PemasukanFragment extends Fragment implements PemasukanAdapter.Pema
         btnHapus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pemasukanViewModel.deleteAllData();
-                tvTotal.setText("0");
+                // Mengambil bulan yang dipilih dari ViewModel
+                pemasukanViewModel.getSelectedMonth().observe(getViewLifecycleOwner(), selectedMonth -> {
+                    if (selectedMonth != null) {
+                        // Memanggil fungsi delete berdasarkan bulan yang dipilih
+                        pemasukanViewModel.deleteDataByMonth(selectedMonth);
+                        tvTotal.setText("0");
+                    } else {
+                        Toast.makeText(requireContext(), "Bulan belum dipilih", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
+
 
     }
 

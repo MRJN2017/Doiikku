@@ -85,13 +85,36 @@ public class PengeluaranFragment extends Fragment implements PengeluaranAdapter.
             }
         });
 
+
         btnHapus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pengeluaranViewModel.deleteAllData();
-                tvTotal.setText("0");
+                // Membuat dialog konfirmasi penghapusan
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(requireContext());
+                alertDialogBuilder.setMessage("Apakah Anda yakin ingin menghapus semua data untuk bulan ini?");
+                alertDialogBuilder.setPositiveButton("Ya, Hapus", (dialogInterface, i) -> {
+                    // Mengambil bulan yang dipilih dari ViewModel
+                    pengeluaranViewModel.getSelectedMonth().observe(getViewLifecycleOwner(), selectedMonth -> {
+                        if (selectedMonth != null) {
+                            // Memanggil fungsi delete berdasarkan bulan yang dipilih
+                            pengeluaranViewModel.deleteDataByMonth(selectedMonth);
+                            tvTotal.setText("0");
+                            Toast.makeText(requireContext(), "Data untuk bulan " + selectedMonth + " telah dihapus", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(requireContext(), "Bulan belum dipilih", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                });
+
+                // Tombol batal untuk membatalkan penghapusan
+                alertDialogBuilder.setNegativeButton("Batal", (dialogInterface, i) -> dialogInterface.cancel());
+
+                // Menampilkan dialog
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
             }
         });
+
 
     }
 
@@ -143,6 +166,7 @@ public class PengeluaranFragment extends Fragment implements PengeluaranAdapter.
     }
 
     private void showEmptyState(boolean isEmpty) {
+
         btnHapus.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
         tvNotFound.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
         rvListData.setVisibility(isEmpty ? View.GONE : View.VISIBLE);

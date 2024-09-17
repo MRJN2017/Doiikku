@@ -51,19 +51,6 @@ public class PemasukanViewModel extends AndroidViewModel {
         return databaseDao.getTotalPemasukan(currentmont);
     }
 
-    public void deleteAllData() {
-        Completable.fromAction(new Action() {
-                    @Override
-                    public void run() throws Throwable {
-                        databaseDao.deleteAllPemasukan();
-                    }
-
-                })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe();
-    }
-
     public String deleteSingleData(final int uid) {
         String sKeterangan;
         try {
@@ -76,5 +63,18 @@ public class PemasukanViewModel extends AndroidViewModel {
             sKeterangan = "NO";
         }
         return sKeterangan;
+    }
+
+    public void deleteDataByMonth(String selectedMonth) {
+        Completable.fromAction(new Action() {
+                    @Override
+                    public void run() throws Throwable {
+                        databaseDao.deleteAllPemasukanByMonth(selectedMonth);
+                    }
+
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
     }
 }

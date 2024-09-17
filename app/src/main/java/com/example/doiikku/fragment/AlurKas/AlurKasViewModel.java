@@ -1,28 +1,18 @@
 package com.example.doiikku.fragment.AlurKas;
 
 import android.app.Application;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-
 import com.example.doiikku.database.DatabaseClient;
 import com.example.doiikku.database.dao.DatabaseDao;
-import com.example.doiikku.model.ModelDatabase;
 import com.example.doiikku.util.FunctionHelper;
 
-import java.util.List;
-
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.functions.Action;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class AlurKasViewModel extends AndroidViewModel {
 
     private DatabaseDao databaseDao;
-
 
     // Tambahkan MutableLiveData untuk menyimpan bulan yang dipilih
     private MutableLiveData<String> selectedMonth = new MutableLiveData<>();
@@ -43,10 +33,6 @@ public class AlurKasViewModel extends AndroidViewModel {
         return selectedMonth;
     }
 
-    public LiveData<List<ModelDatabase>> getPemasukan(String currentmont) {
-        return databaseDao.getAllPemasukan(currentmont);
-    }
-
     public LiveData<Integer> getTotalPengeluaran(String currentmont) {
         return databaseDao.getTotalPengeluaran(currentmont);
     }
@@ -58,6 +44,4 @@ public class AlurKasViewModel extends AndroidViewModel {
     public LiveData<Integer> getTotalAlurKas(String currentmont) {
         return databaseDao.getTotalAlurKas(currentmont);
     }
-
-
 }

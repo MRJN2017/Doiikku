@@ -20,9 +20,7 @@ import io.reactivex.rxjava3.functions.Action;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class PengeluaranViewModel extends AndroidViewModel {
-    private LiveData<List<ModelDatabase>> mPengeluarans;
     private DatabaseDao databaseDao;
-    private LiveData<Integer> mTotalPrice;
 
     // Tambahkan MutableLiveData untuk menyimpan bulan yang dipilih
     private MutableLiveData<String> selectedMonth = new MutableLiveData<>();
@@ -51,18 +49,7 @@ public class PengeluaranViewModel extends AndroidViewModel {
         return databaseDao.getTotalPengeluaran(currentmont);
     }
 
-    public void deleteAllData() {
-        Completable.fromAction(new Action() {
-                    @Override
-                    public void run() throws Throwable {
-                        databaseDao.deleteAllPengeluaran();
-                    }
 
-                })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe();
-    }
 
     public String deleteSingleData(final int uid) {
         String sKeterangan;
@@ -76,5 +63,18 @@ public class PengeluaranViewModel extends AndroidViewModel {
             sKeterangan = "NO";
         }
         return sKeterangan;
+    }
+
+    public void deleteDataByMonth(String selectedMonth) {
+        Completable.fromAction(new Action() {
+                    @Override
+                    public void run() throws Throwable {
+                        databaseDao.deleteAllPengeluaranByMonth(selectedMonth);
+                    }
+
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
     }
 }
