@@ -1,7 +1,15 @@
 package com.example.doiikku.fragment.pengeluaran;
 
 import android.app.AlertDialog;
+import android.content.ContentValues;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.pdf.PdfDocument;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +30,8 @@ import com.example.doiikku.model.ModelDatabase;
 import com.example.doiikku.util.FunctionHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,6 +87,8 @@ public class PengeluaranFragment extends Fragment implements PengeluaranAdapter.
     }
 
 
+
+
     private void initAction() {
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,8 +126,6 @@ public class PengeluaranFragment extends Fragment implements PengeluaranAdapter.
                 alertDialog.show();
             }
         });
-
-
     }
 
 

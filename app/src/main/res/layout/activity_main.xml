@@ -26,7 +26,7 @@
             app:tabIndicatorColor="@color/teal_200"
             app:tabInlineLabel="true"
             app:tabMode="fixed"
-            app:tabSelectedTextColor="@color/teal_200"
+            app:tabSelectedTextColor="@color/black"
             app:tabTextAppearance="@style/CustomTextAppearance"
             app:tabTextColor="@color/white" />
 

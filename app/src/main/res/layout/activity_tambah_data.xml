@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/mybackground"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
     <androidx.core.widget.NestedScrollView
@@ -29,7 +30,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Keterangan"
+                    android:text="◖Keterangan◗"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
@@ -38,12 +39,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:backgroundTint="@color/black"
-                    android:hint="Masukan keterangan"
+                    android:hint="\u00A0\u00A0\u00A0\u00A0Masukan keterangan"
                     android:imeOptions="actionNext"
                     android:inputType="textPersonName"
                     android:maxLines="1"
                     android:textColor="@color/black"
-                    android:textColorHint="@color/white"
+                    android:textColorHint="@color/black"
                     android:textSize="16sp" />
 
             </LinearLayout>
@@ -59,7 +60,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tanggal"
+                    android:text="◖Tanggal◗"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
@@ -69,12 +70,12 @@
                     android:layout_height="50dp"
                     android:backgroundTint="@color/black"
                     android:focusableInTouchMode="false"
-                    android:hint="Masukan tanggal"
+                    android:hint="\u00A0\u00A0\u00A0\u00A0Masukan tanggal"
                     android:imeOptions="actionNext"
                     android:inputType="date"
                     android:maxLines="1"
                     android:textColor="@color/black"
-                    android:textColorHint="@color/white"
+                    android:textColorHint="@color/black"
                     android:textSize="16sp" />
 
             </LinearLayout>
@@ -90,7 +91,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Jumlah Uang"
+                    android:text="◖Jumlah Uang◗"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
@@ -99,12 +100,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:backgroundTint="@color/black"
-                    android:hint="Masukan jumlah uang"
+                    android:hint="\u00A0\u00A0\u00A0\u00A0Masukan jumlah uang"
                     android:imeOptions="actionDone"
                     android:inputType="number"
                     android:maxLines="1"
                     android:textColor="@color/black"
-                    android:textColorHint="@color/white"
+                    android:textColorHint="@color/black"
                     android:textSize="16sp" />
 
             </LinearLayout>

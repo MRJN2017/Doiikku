@@ -1,7 +1,15 @@
 package com.example.doiikku.fragment.pemasukan;
 
 import android.app.AlertDialog;
+import android.content.ContentValues;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.pdf.PdfDocument;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +30,9 @@ import com.example.doiikku.model.ModelDatabase;
 import com.example.doiikku.util.FunctionHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +42,7 @@ public class PemasukanFragment extends Fragment implements PemasukanAdapter.Pema
     private PemasukanViewModel pemasukanViewModel;
     private List<ModelDatabase> modelDatabase = new ArrayList<>();
     TextView tvTotal, tvNotFound;
-    Button btnHapus;
+    Button btnHapus, btnSavePDF;
 
     FloatingActionButton fabAdd;
     RecyclerView rvListData;
@@ -64,16 +75,22 @@ public class PemasukanFragment extends Fragment implements PemasukanAdapter.Pema
         rvListData = view.findViewById(R.id.rvListData);
         //mengatur visibilitas dari tvNotFounf menjadi gone atau hilang
         tvNotFound.setVisibility(View.GONE);
+        
+        btnSavePDF = view.findViewById(R.id.btnSavePDF);
 
+        
+        //menginisialisasi ViewModel
         pemasukanViewModel = new ViewModelProvider(requireActivity()).get(PemasukanViewModel.class);
 
         // Observasi nilai selectedMonth dari ViewModel
         pemasukanViewModel.getSelectedMonth().observe(getViewLifecycleOwner(), this::observeData);
-
         //menginisialisasi adapter yang akan digunakan dalam RecyclerView
         initAdapter();
+
         initAction();
     }
+
+
 
 
     private void initAction() {
@@ -99,6 +116,7 @@ public class PemasukanFragment extends Fragment implements PemasukanAdapter.Pema
                 });
             }
         });
+        
 
 
     }
@@ -124,7 +142,6 @@ public class PemasukanFragment extends Fragment implements PemasukanAdapter.Pema
             String formattedPrice = FunctionHelper.rupiahFormat(totalPrice);
             tvTotal.setText(formattedPrice);
         });
-
     }
 
     @Override

@@ -12,7 +12,7 @@ import java.util.List;
 
 @Dao
 public interface DatabaseDao {
-    @Query("SELECT * FROM tbl_doiku WHERE tanggal LIKE '%'||:currentmont||'%' and tipe = 'pengeluaran'")
+    @Query("SELECT * FROM tbl_doiku WHERE tanggal LIKE '%'||:currentmont||'%' and tipe = 'pengeluaran' order by tanggal asc ")
     LiveData<List<ModelDatabase>> getAllPengeluaran(String currentmont);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -31,7 +31,7 @@ public interface DatabaseDao {
     void updateDataPengeluaran(String keterangan, String tgl, int harga, int id_doi);
 
     //Data Pemasukan
-    @Query("SELECT * FROM tbl_doiku WHERE tanggal LIKE '%'||:currentmont||'%' and tipe = 'pemasukan'")
+    @Query("SELECT * FROM tbl_doiku WHERE tanggal LIKE '%'||:currentmont||'%' and tipe = 'pemasukan' order by tanggal asc")
     LiveData<List<ModelDatabase>> getAllPemasukan(String currentmont);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

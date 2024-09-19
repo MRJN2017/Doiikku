@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
@@ -15,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="DOI'KU"
-            android:textColor="@android:color/white"
+            android:textColor="@color/white"
             android:textSize="18sp"
             app:fontFamily="@font/autour_one" />
 
@@ -24,11 +25,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginStart="16dp"
-            android:backgroundTint="#673AB7"
+            android:layout_marginStart="5dp"
+            android:backgroundTint="#6200ED"
             android:contentDescription="Back"
-            android:src="@drawable/ic_back" />
-
+            android:src="@drawable/ic_back"
+            tools:ignore="TouchTargetSizeCheck" />
 
     </RelativeLayout>
 

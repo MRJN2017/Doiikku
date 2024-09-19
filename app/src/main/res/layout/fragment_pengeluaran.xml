@@ -1,11 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+    <!-- CardView untuk total pengeluaran -->
     <androidx.cardview.widget.CardView
         android:id="@+id/cvTotal"
         android:layout_width="match_parent"
@@ -28,8 +27,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="1dp"
                 android:text="Total Pengeluaran Bulan Ini:"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
@@ -49,41 +48,52 @@
 
     </androidx.cardview.widget.CardView>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabAdd"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:contentDescription="@string/title_expenses"
-        android:layout_marginTop="98dp"
-        android:src="@drawable/ic_add"
-        app:backgroundTint="#4CAF50"
-        app:fabSize="normal" />
-
+    <!-- RecyclerView untuk daftar data -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvListData"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/btnHapus"
+        android:layout_height="wrap_content"
         android:layout_below="@id/cvTotal"
-        android:layout_marginTop="58dp" />
+        android:layout_above="@id/btnHapus"
+         />
 
-
+    <!-- Button Hapus -->
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnHapus"
-        android:layout_width="match_parent"
+        android:layout_width="56dp"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="358dp"
-        android:layout_marginEnd="-55dp"
-        android:layout_marginBottom="17dp"
-        android:layout_toStartOf="@id/fabAdd"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/ic_delete"
-        android:backgroundTint="#F5E239"
-        android:textAllCaps="false"
-        android:textColor="@android:color/white"
+        android:backgroundTint="#C84F4F"
         android:contentDescription="@string/delete_allitem"
-        />
+        android:textAllCaps="false"
+        android:textColor="@android:color/white" />
+
+    <!-- FloatingActionButton -->
+
+    <!-- TextView untuk tampilan data tidak ditemukan -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/ic_add"
+        app:backgroundTint="#4CAF50"
+        app:fabSize="mini" />
 
     <TextView
         android:id="@+id/tvNotFound"

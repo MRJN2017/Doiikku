@@ -8,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!-- Title TextView in the center -->
         <TextView
             android:id="@+id/action_bar_title"
             android:layout_width="wrap_content"
@@ -18,16 +19,32 @@
             android:textSize="18sp"
             app:fontFamily="@font/autour_one" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnPickMonth"
-            style="@style/Widget.MaterialComponents.Button.Icon"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            app:icon="@drawable/ic_menu_my_calendar"
+        <!-- LinearLayout to align buttons horizontally -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            />
+            android:orientation="horizontal">
 
+            <!-- Button for PDF -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSavePDF"
+                style="@style/Widget.MaterialComponents.Button.Icon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:icon="@drawable/picture_pdf"
+                android:layout_marginEnd="8dp" /> <!-- Added margin end -->
+
+
+            <!-- Button for Date -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnPickMonth"
+                style="@style/Widget.MaterialComponents.Button.Icon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:icon="@drawable/ic_menu_my_calendar" />
+        </LinearLayout>
 
     </RelativeLayout>
 

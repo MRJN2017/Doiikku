@@ -64,7 +64,7 @@ public class AddPengeluaranActivity extends AppCompatActivity {
 
         addPengeluaranViewModel = new ViewModelProvider(this).get(AddPengeluaranViewModel.class);
         // mengatur latar belakang actionbar. Disini saya membuat backgroundnya menjadi gradient
-        Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.gradientappbar, null);
+        Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.gradientviewcard, null);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(drawable);
 
